@@ -201,7 +201,7 @@ control MyIngress(inout headers hdr,
            hdr.sfc_chain[3].setInvalid();
     }
 
-    action sfc_encapsulation(bit<8> id, bit<8> sc, bit<9> sf1, bit<7> tail1, bit<9> sf2, bit<7> tail2, bit<9> sf3,  bit<7> tail3, bit<9> sf4,  bit<7> tail4) {
+    action sfc_encapsulation(bit<8> id, bit<8> sc, bit<9> sf1, bit<9> sf2, bit<9> sf3,  bit<9> sf4) {
         hdr.ethernet.etherType = TYPE_SFC;
         hdr.sfc.setValid();
         hdr.sfc.id= id;
@@ -214,10 +214,10 @@ control MyIngress(inout headers hdr,
         hdr.sfc_chain[1].sf = sf2;
         hdr.sfc_chain[2].sf = sf3;
         hdr.sfc_chain[3].sf = sf4;
-        hdr.sfc_chain[0].tail = tail1;
-        hdr.sfc_chain[1].tail = tail2;
-        hdr.sfc_chain[2].tail = tail3;
-        hdr.sfc_chain[3].tail = tail4;
+        hdr.sfc_chain[0].tail = 0;
+        hdr.sfc_chain[1].tail = 0;
+        hdr.sfc_chain[2].tail = 0;
+        hdr.sfc_chain[3].tail = 1;
     }
     table sfc_classifier {
         key = {
